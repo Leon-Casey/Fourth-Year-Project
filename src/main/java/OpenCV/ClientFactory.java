@@ -12,6 +12,9 @@ import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 
 import java.io.IOException;
 
+//AKIAILEURW2FYP7QIRTQ
+//7P0FUqD4owSxN/EIqpmLA090a8KDCaqieNh5ehLe
+
 public class ClientFactory {
     public static AmazonRekognition createRekognitionClient() throws IOException {
         ClientConfiguration clientConfig = new ClientConfiguration();

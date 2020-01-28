@@ -5,6 +5,7 @@ import com.amazonaws.services.s3.model.ObjectListing;
 import com.amazonaws.services.s3.model.S3ObjectSummary;
 import org.opencv.core.Core;
 
+import java.io.IOException;
 import java.util.List;
 
 public class Test {
@@ -12,7 +13,15 @@ public class Test {
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
     }
 
-    static AmazonS3 s3Client = ClientFactory.createS3Client();
+    static AmazonS3 s3Client;
+
+    static {
+        try {
+            s3Client = ClientFactory.createS3Client();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
 
     public static void main(String[] args) {
