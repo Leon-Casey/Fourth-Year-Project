@@ -2,16 +2,15 @@ package OpenCV;
 
 import org.opencv.core.Mat;
 
-import java.awt.Graphics;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferByte;
 import java.awt.image.ImageObserver;
 import java.io.IOException;
-import javax.swing.JPanel;
 
 
 public class CameraPanel extends JPanel {
-    private static final long serialVersionUID = 1L;
     private BufferedImage image;
 
     public CameraPanel() {
