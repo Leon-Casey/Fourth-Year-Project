@@ -3,15 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="f869931e-3335-4dbb-8730-c6be12d138a1" name="Default Changelist" comment="Updated GUI &amp; some performance improvements">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/OpenCV/ClientFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/OpenCV/ClientFactory.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/OpenCV/Detector.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/OpenCV/Detector.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/OpenCV/Test.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/OpenCV/Test.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/OpenCV/App.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/OpenCV/App.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/OpenCV/CameraPanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/OpenCV/CameraPanel.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/OpenCV/ClientFactory.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/OpenCV/ClientFactory.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/OpenCV/Detector.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/OpenCV/Detector.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/OpenCV/MainFrame.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/OpenCV/MainFrame.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/OpenCV/Test.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/OpenCV/Test.class" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -28,8 +21,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/OpenCV/App.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="251">
-              <caret line="28" column="36" lean-forward="true" selection-start-line="28" selection-start-column="36" selection-end-line="28" selection-end-column="36" />
+            <state relative-caret-position="476">
+              <caret line="28" column="36" selection-start-line="28" selection-start-column="36" selection-end-line="28" selection-end-column="36" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -40,7 +33,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/OpenCV/Credentials.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="166">
+            <state relative-caret-position="1122">
               <caret line="75" selection-start-line="75" selection-end-line="75" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -53,7 +46,7 @@
         <entry file="file://$PROJECT_DIR$/src/main/java/OpenCV/Test.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="238">
-              <caret line="23" column="5" selection-start-line="23" selection-start-column="5" selection-end-line="23" selection-end-column="5" />
+              <caret line="24" column="5" lean-forward="true" selection-start-line="24" selection-start-column="5" selection-end-line="24" selection-end-column="5" />
             </state>
           </provider>
         </entry>
@@ -61,8 +54,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/OpenCV/Detector.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="187">
-              <caret line="100" column="41" selection-start-line="100" selection-start-column="41" selection-end-line="100" selection-end-column="41" />
+            <state relative-caret-position="374">
+              <caret line="103" column="35" lean-forward="true" selection-start-line="103" selection-start-column="35" selection-end-line="103" selection-end-column="35" />
             </state>
           </provider>
         </entry>
@@ -84,8 +77,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/OpenCV/MainFrame.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="248">
-              <caret line="47" column="46" lean-forward="true" selection-start-line="47" selection-start-column="46" selection-end-line="47" selection-end-column="46" />
+            <state relative-caret-position="238">
+              <caret line="20" column="27" lean-forward="true" selection-start-line="20" selection-end-line="21" />
             </state>
           </provider>
         </entry>
@@ -94,7 +87,7 @@
         <entry file="file://$PROJECT_DIR$/src/main/java/OpenCV/ClientFactory.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="425">
-              <caret line="35" column="35" lean-forward="true" selection-start-line="35" selection-start-column="35" selection-end-line="35" selection-end-column="35" />
+              <caret line="35" selection-start-line="35" selection-end-line="35" />
             </state>
           </provider>
         </entry>
@@ -118,13 +111,13 @@
         <option value="$PROJECT_DIR$/src/main/java/OpenCV/App.java" />
         <option value="$PROJECT_DIR$/src/main/java/OpenCV/Credentials.java" />
         <option value="$PROJECT_DIR$/src/main/java/OpenCV/MainFrame.java" />
-        <option value="$PROJECT_DIR$/src/main/java/OpenCV/Test.java" />
         <option value="$PROJECT_DIR$/src/main/java/OpenCV/ClientFactory.java" />
+        <option value="$PROJECT_DIR$/src/main/java/OpenCV/Test.java" />
         <option value="$PROJECT_DIR$/src/main/java/OpenCV/Detector.java" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="665" />
     <option name="width" value="1022" />
     <option name="height" value="1017" />
@@ -135,8 +128,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -170,19 +161,12 @@
               <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="OpenCV" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="OpenCVRekognition" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Fourth-Year-Project" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="OpenCV" type="462c0819:PsiDirectoryNode" />
-              <item name="Credentials" type="e9f4de52:FormNode" />
-            </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -282,10 +266,10 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="665" y="0" width="1022" height="1017" extended-state="0" />
+    <frame x="-8" y="-8" width="1696" height="1026" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.23180874" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.1393643" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -294,8 +278,8 @@
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32918552" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.33484164" />
-      <window_info anchor="bottom" id="Debug" order="3" visible="true" weight="0.39932126" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.33482644" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.39932126" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -358,9 +342,6 @@
   <component name="editorHistoryManager">
     <entry file="jar://$MAVEN_REPOSITORY$/com/amazonaws/aws-java-sdk-core/1.11.592/aws-java-sdk-core-1.11.592.jar!/com/amazonaws/client/builder/AwsClientBuilder.class" />
     <entry file="jar://$MAVEN_REPOSITORY$/com/amazonaws/aws-java-sdk-core/1.11.592/aws-java-sdk-core-1.11.592.jar!/com/amazonaws/auth/profile/ProfileCredentialsProvider.class" />
-    <entry file="file://$PROJECT_DIR$/src/main/java/OpenCV/Credentials.form">
-      <provider selected="true" editor-type-id="ui-designer" />
-    </entry>
     <entry file="jar://C:/Program Files/Java/jdk-12.0.1/lib/src.zip!/java.desktop/javax/swing/UIManager.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="186">
@@ -375,22 +356,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/OpenCV/App.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/OpenCV/Credentials.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="251">
-          <caret line="28" column="36" lean-forward="true" selection-start-line="28" selection-start-column="36" selection-end-line="28" selection-end-column="36" />
+        <state relative-caret-position="1122">
+          <caret line="75" selection-start-line="75" selection-end-line="75" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/OpenCV/MainFrame.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="248">
-          <caret line="47" column="46" lean-forward="true" selection-start-line="47" selection-start-column="46" selection-end-line="47" selection-end-column="46" />
-        </state>
-      </provider>
+    <entry file="file://$PROJECT_DIR$/src/main/java/OpenCV/Credentials.form">
+      <provider selected="true" editor-type-id="ui-designer" />
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/OpenCV/CameraPanel.java">
       <provider selected="true" editor-type-id="text-editor">
@@ -399,34 +376,41 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/OpenCV/Credentials.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/OpenCV/ClientFactory.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="166">
-          <caret line="75" selection-start-line="75" selection-end-line="75" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state relative-caret-position="425">
+          <caret line="35" selection-start-line="35" selection-end-line="35" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/OpenCV/Test.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="238">
-          <caret line="23" column="5" selection-start-line="23" selection-start-column="5" selection-end-line="23" selection-end-column="5" />
+          <caret line="24" column="5" lean-forward="true" selection-start-line="24" selection-start-column="5" selection-end-line="24" selection-end-column="5" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/OpenCV/ClientFactory.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/OpenCV/App.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
-          <caret line="35" column="35" lean-forward="true" selection-start-line="35" selection-start-column="35" selection-end-line="35" selection-end-column="35" />
+        <state relative-caret-position="476">
+          <caret line="28" column="36" selection-start-line="28" selection-start-column="36" selection-end-line="28" selection-end-column="36" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/OpenCV/MainFrame.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="20" column="27" lean-forward="true" selection-start-line="20" selection-end-line="21" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/OpenCV/Detector.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="100" column="41" selection-start-line="100" selection-start-column="41" selection-end-line="100" selection-end-column="41" />
+        <state relative-caret-position="374">
+          <caret line="103" column="35" lean-forward="true" selection-start-line="103" selection-start-column="35" selection-end-line="103" selection-end-column="35" />
         </state>
       </provider>
     </entry>
