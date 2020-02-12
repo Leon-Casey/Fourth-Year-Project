@@ -1,6 +1,7 @@
 package OpenCV;
 
 import com.amazonaws.services.rekognition.AmazonRekognition;
+import com.amazonaws.services.rekognition.model.CompareFacesRequest;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.ObjectListing;
 import com.amazonaws.services.s3.model.S3ObjectSummary;
@@ -10,7 +11,9 @@ import org.opencv.imgproc.Imgproc;
 import org.opencv.objdetect.CascadeClassifier;
 
 import java.io.IOException;
+import java.nio.ByteBuffer;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Detector {
 
@@ -22,6 +25,9 @@ public class Detector {
     private AmazonS3 s3Client;
     private ObjectListing bucket;
     List<S3ObjectSummary> summaries;
+
+    CompareFacesRequest compareRequest;
+    int reqNum;
 
     public Detector() throws IOException {
         this.detectedFaces = new MatOfRect();
@@ -35,14 +41,16 @@ public class Detector {
         s3Client = ClientFactory.createS3Client();
         bucket = s3Client.listObjects("rekog.faces");
         summaries = bucket.getObjectSummaries();
-//
-//        while (bucket.isTruncated()) {
-//            bucket = s3Client.listNextBatchOfObjects(bucket);
-//            summaries.addAll(bucket.getObjectSummaries());
-//        }
+
+        while (bucket.isTruncated()) {
+            bucket = s3Client.listNextBatchOfObjects(bucket);
+            summaries.addAll(bucket.getObjectSummaries());
+        }
+
+        reqNum = 0;
     }
 
-    public Mat detect(Mat inputFrame, int frameCounter) throws IOException {
+    public Mat detect(Mat inputFrame, int frameCounter) {
         inputFrame.copyTo(colouredImage);
         inputFrame.copyTo(greyImage);
 
@@ -63,20 +71,21 @@ public class Detector {
 //        BufferedImage img1 = ImageIO.read(new File("Lenna50.jpg"));
 //        BufferedImage img2 = ImageIO.read(new File("Lenna100.jpg"));
 
-        showFacesOnScreenAndCaptureFace(detectedFaces, frameCounter);
+        showFacesOnScreen(detectedFaces, frameCounter);
 
         return colouredImage;
     }
 
-    private void showFacesOnScreenAndCaptureFace(MatOfRect detectedFaces, int frameCounter) throws IOException {
+    private void showFacesOnScreen(MatOfRect detectedFaces, int frameCounter) {
         for (Rect rect : detectedFaces.toArray()) {
             Imgproc.rectangle(colouredImage, new Point(rect.x, rect.y), new Point(
                     rect.x + rect.width, rect.y + rect.height), new Scalar(250, 80, 80), 2);
-            if(frameCounter % 10 == 0) {
-//                File file = new File("test.png");
-                MatOfByte mob = new MatOfByte();
-                Imgcodecs.imencode(".png", colouredImage, mob);
-                byte[] ba = mob.toArray();
+            if (frameCounter % 100 == 0) {
+                new Thread(() -> {
+                    //                File file = new File("test.png");
+                    MatOfByte mob = new MatOfByte();
+                    Imgcodecs.imencode(".png", colouredImage, mob);
+                    byte[] ba = mob.toArray();
 
 //                BufferedImage bi = ImageIO.read(new ByteArrayInputStream(ba));
 //                try {
@@ -86,32 +95,9 @@ public class Detector {
 //                }
 
 //                //todo: rekognition calls
-//                ByteBuffer byteBufferImg = ByteBuffer.wrap(ba);
-//
-//                S3Objects.inBucket(s3Client, "rekog.faces").forEach((S3ObjectSummary object) -> {
-//                    //                    .withSourceImage(new Image().withS3Object(new S3Object().withName("princeWill1.png").withBucket("rekog.faces")))
-//                    CompareFacesRequest request = new CompareFacesRequest()
-//                            .withSourceImage(new Image().withS3Object(new S3Object().withBucket(object.getBucketName()).withName(object.getKey())))
-//                            .withTargetImage(new Image().withBytes(byteBufferImg))
-//                            .withSimilarityThreshold(90F);
-//
-//                    CompareFacesResult result = rekognitionClient.compareFaces(request);
-//
-//                    int reqNum = 0;
-//                    reqNum++;
-//
-//                    List<CompareFacesMatch> faceMatches = result.getFaceMatches();
-//                    for (CompareFacesMatch match : faceMatches) {
-//                        Float similarity = match.getSimilarity();
-//                        System.out.println("Request " + reqNum + "Similarity: " + similarity);
-//                    }
-//                });
-
-//
-//                CompareFacesRequest request = new CompareFacesRequest()
-//                        .withSourceImage(new Image().withBytes(byteBufferImg))
-//                        .withTargetImage(new Image().withBytes(byteBufferImg2))
-//                        .withSimilarityThreshold(80F);
+                    ByteBuffer byteBufferImg = ByteBuffer.wrap(ba);
+                    attemptRecognition(byteBufferImg, frameCounter);
+                }).start();
             }
 
 //            String image1 = "/home/lcasey/projects/OpenCVRekognition/test.png";
@@ -160,5 +146,46 @@ public class Detector {
 //            double p = compareFaces(profileImg, img);
 //            System.out.println("diff percent: " + p);
         }
+    }
+
+    private boolean attemptRecognition(ByteBuffer faceInBytes,int frameCounter) {
+
+        reqNum++;
+        AtomicBoolean matchFound = new AtomicBoolean(false);
+
+//        summaries.forEach(System.out::println);
+
+        while(matchFound.get() != false) {
+
+        }
+
+//        S3Objects.inBucket(s3Client, "rekog.faces").forEach((S3ObjectSummary object) -> {
+//            while(matchFound.get() != false) {
+//                compareRequest = new CompareFacesRequest()
+//                        .withSourceImage(new Image().withS3Object(new S3Object().withBucket(object.getBucketName()).withName(object.getKey())))
+//                        .withTargetImage(new Image().withBytes(faceInBytes))
+//                        .withSimilarityThreshold(90F);
+//
+//                CompareFacesResult result = rekognitionClient.compareFaces(compareRequest);
+//                if (!result.getFaceMatches().isEmpty()) {
+//                    matchFound.set(true);
+//                    return true;
+//                }
+//
+////            if (matchFound.get()) {
+////                System.out.println("REQ NUM: " + reqNum + " MATCHED WITH: " + object.getKey() + " ON FRAME " + frameCounter);
+////                return;
+////            } else {
+////                System.out.println("REQ NUM: " + reqNum + " FOUND NO MATCHES ON FRAME " + frameCounter);
+////            }
+//
+////                    List<CompareFacesMatch> faceMatches = result.getFaceMatches();
+////                    for (CompareFacesMatch match : faceMatches) {
+////                        Float similarity = match.getSimilarity();
+////                        System.out.println("Request " + reqNum + ": MATCHED WITH " + match.toString() + " Similarity: " + similarity);
+////                    }
+//            }
+//            });
+        return false;
     }
 }
