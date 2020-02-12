@@ -1,19 +1,15 @@
 package OpenCV;
 
 import com.amazonaws.services.rekognition.AmazonRekognition;
-import com.amazonaws.services.rekognition.model.*;
 import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.iterable.S3Objects;
 import com.amazonaws.services.s3.model.ObjectListing;
 import com.amazonaws.services.s3.model.S3ObjectSummary;
-import org.opencv.core.Point;
 import org.opencv.core.*;
 import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
 import org.opencv.objdetect.CascadeClassifier;
 
 import java.io.IOException;
-import java.nio.ByteBuffer;
 import java.util.List;
 
 public class Detector {
@@ -89,27 +85,27 @@ public class Detector {
 //                    Logger.getLogger(Detector.class.getName()).log(Level.SEVERE, null, ex);
 //                }
 
-                //todo: rekognition calls
-                ByteBuffer byteBufferImg = ByteBuffer.wrap(ba);
-
-                S3Objects.inBucket(s3Client, "rekog.faces").forEach((S3ObjectSummary object) -> {
-                    //                    .withSourceImage(new Image().withS3Object(new S3Object().withName("princeWill1.png").withBucket("rekog.faces")))
-                    CompareFacesRequest request = new CompareFacesRequest()
-                            .withSourceImage(new Image().withS3Object(new S3Object().withBucket(object.getBucketName()).withName(object.getKey())))
-                            .withTargetImage(new Image().withBytes(byteBufferImg))
-                            .withSimilarityThreshold(90F);
-
-                    CompareFacesResult result = rekognitionClient.compareFaces(request);
-
-                    int reqNum = 0;
-                    reqNum++;
-
-                    List<CompareFacesMatch> faceMatches = result.getFaceMatches();
-                    for (CompareFacesMatch match : faceMatches) {
-                        Float similarity = match.getSimilarity();
-                        System.out.println("Request " + reqNum + "Similarity: " + similarity);
-                    }
-                });
+//                //todo: rekognition calls
+//                ByteBuffer byteBufferImg = ByteBuffer.wrap(ba);
+//
+//                S3Objects.inBucket(s3Client, "rekog.faces").forEach((S3ObjectSummary object) -> {
+//                    //                    .withSourceImage(new Image().withS3Object(new S3Object().withName("princeWill1.png").withBucket("rekog.faces")))
+//                    CompareFacesRequest request = new CompareFacesRequest()
+//                            .withSourceImage(new Image().withS3Object(new S3Object().withBucket(object.getBucketName()).withName(object.getKey())))
+//                            .withTargetImage(new Image().withBytes(byteBufferImg))
+//                            .withSimilarityThreshold(90F);
+//
+//                    CompareFacesResult result = rekognitionClient.compareFaces(request);
+//
+//                    int reqNum = 0;
+//                    reqNum++;
+//
+//                    List<CompareFacesMatch> faceMatches = result.getFaceMatches();
+//                    for (CompareFacesMatch match : faceMatches) {
+//                        Float similarity = match.getSimilarity();
+//                        System.out.println("Request " + reqNum + "Similarity: " + similarity);
+//                    }
+//                });
 
 //
 //                CompareFacesRequest request = new CompareFacesRequest()
