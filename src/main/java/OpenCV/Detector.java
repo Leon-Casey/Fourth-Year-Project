@@ -2,6 +2,9 @@ package OpenCV;
 
 import com.amazonaws.services.rekognition.AmazonRekognition;
 import com.amazonaws.services.rekognition.model.CompareFacesRequest;
+import com.amazonaws.services.rekognition.model.CompareFacesResult;
+import com.amazonaws.services.rekognition.model.Image;
+import com.amazonaws.services.rekognition.model.S3Object;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.ObjectListing;
 import com.amazonaws.services.s3.model.S3ObjectSummary;
@@ -24,7 +27,8 @@ public class Detector {
     private AmazonRekognition rekognitionClient;
     private AmazonS3 s3Client;
     private ObjectListing bucket;
-    List<S3ObjectSummary> summaries;
+    private List<S3ObjectSummary> summaries;
+
 
     CompareFacesRequest compareRequest;
     int reqNum;
@@ -148,36 +152,36 @@ public class Detector {
         }
     }
 
-    private boolean attemptRecognition(ByteBuffer faceInBytes,int frameCounter) {
+    private void attemptRecognition(ByteBuffer faceInBytes, int frameCounter) {
 
         reqNum++;
         AtomicBoolean matchFound = new AtomicBoolean(false);
 
 //        summaries.forEach(System.out::println);
 
-        while(matchFound.get() != false) {
+//                    S3Objects.inBucket(s3Client, "rekog.faces").forEach((S3ObjectSummary object) -> {
+        while (matchFound.get() == false) {
+            for (S3ObjectSummary object : summaries) {
+                compareRequest = new CompareFacesRequest()
+                        .withSourceImage(new Image().withS3Object(new S3Object().withBucket("rekog.faces").withName(object.getKey())))
+                        .withTargetImage(new Image().withBytes(faceInBytes))
+                        .withSimilarityThreshold(90F);
 
+                CompareFacesResult result = rekognitionClient.compareFaces(compareRequest);
+
+                if (!result.getFaceMatches().isEmpty()) {
+                    matchFound.set(true);
+                    System.out.println("REQ NUM: " + reqNum + " MATCHED WITH: " + object.getKey() + " ON FRAME " + frameCounter);
+
+                }
+//                    });
+            }
         }
+    }
+}
 
-//        S3Objects.inBucket(s3Client, "rekog.faces").forEach((S3ObjectSummary object) -> {
-//            while(matchFound.get() != false) {
-//                compareRequest = new CompareFacesRequest()
-//                        .withSourceImage(new Image().withS3Object(new S3Object().withBucket(object.getBucketName()).withName(object.getKey())))
-//                        .withTargetImage(new Image().withBytes(faceInBytes))
-//                        .withSimilarityThreshold(90F);
-//
-//                CompareFacesResult result = rekognitionClient.compareFaces(compareRequest);
-//                if (!result.getFaceMatches().isEmpty()) {
-//                    matchFound.set(true);
-//                    return true;
-//                }
-//
-////            if (matchFound.get()) {
-////                System.out.println("REQ NUM: " + reqNum + " MATCHED WITH: " + object.getKey() + " ON FRAME " + frameCounter);
-////                return;
-////            } else {
-////                System.out.println("REQ NUM: " + reqNum + " FOUND NO MATCHES ON FRAME " + frameCounter);
-////            }
+
+
 //
 ////                    List<CompareFacesMatch> faceMatches = result.getFaceMatches();
 ////                    for (CompareFacesMatch match : faceMatches) {
@@ -186,6 +190,3 @@ public class Detector {
 ////                    }
 //            }
 //            });
-        return false;
-    }
-}

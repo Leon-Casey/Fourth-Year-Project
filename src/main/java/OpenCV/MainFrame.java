@@ -36,7 +36,7 @@ public class MainFrame extends JFrame {
 
     public void displayCam() throws IOException {
         Mat webcamImage = new Mat();
-        //todo: in case of integrated webcam, index 1 is used
+        //todo: index 0 or 1
         VideoCapture videoCapture = new VideoCapture(0);
         videoCapture.set(Videoio.CAP_PROP_FPS, 30);
 
