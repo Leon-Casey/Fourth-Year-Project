@@ -7,6 +7,7 @@ import org.opencv.videoio.Videoio;
 
 import javax.swing.*;
 import java.io.IOException;
+import java.sql.SQLException;
 
 public class MainFrame extends JFrame {
 
@@ -15,7 +16,7 @@ public class MainFrame extends JFrame {
     private Mat profileImage;
     private int frameCounter = 0;
 
-    public MainFrame() throws IOException {
+    public MainFrame() throws IOException, SQLException, ClassNotFoundException {
         super("FYP");
         //        Loader.load(opencv_java.class);
         OpenCV.loadLocally();
@@ -32,6 +33,21 @@ public class MainFrame extends JFrame {
 //                System.exit(0);
 //            }
 //        });
+
+
+//        Statement statement = conn.createStatement();
+//        String sql = "SELECT * FROM users";
+//        ResultSet rs = statement.executeQuery(sql);
+//        ResultSetMetaData rsmd = rs.getMetaData();
+//        int columnsNumber = rsmd.getColumnCount();
+//        while (rs.next()) {
+//            for (int i = 1; i <= columnsNumber; i++) {
+//                if (i > 1) System.out.print(",  ");
+//                String columnValue = rs.getString(i);
+//                System.out.print(columnValue + " " + rsmd.getColumnName(i));
+//            }
+//            System.out.println("");
+//        }
     }
 
     public void displayCam() throws IOException {

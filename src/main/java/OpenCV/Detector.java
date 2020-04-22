@@ -13,9 +13,13 @@ import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
 import org.opencv.objdetect.CascadeClassifier;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
+import java.sql.*;
+import java.util.Date;
 import java.util.List;
+import java.util.Properties;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Detector {
@@ -28,12 +32,13 @@ public class Detector {
     private AmazonS3 s3Client;
     private ObjectListing bucket;
     private List<S3ObjectSummary> summaries;
+    private Connection conn;
 
 
     CompareFacesRequest compareRequest;
     int reqNum;
 
-    public Detector() throws IOException {
+    public Detector() throws IOException, SQLException {
         this.detectedFaces = new MatOfRect();
         this.colouredImage = new Mat();
         this.greyImage = new Mat();
@@ -45,6 +50,20 @@ public class Detector {
         s3Client = ClientFactory.createS3Client();
         bucket = s3Client.listObjects("rekog.faces");
         summaries = bucket.getObjectSummaries();
+
+        String rootDirectory=System.getProperty("user.dir");
+        String resourceDirectory=rootDirectory+"/resources/";
+
+        Properties prop = new Properties();
+        prop.load(new FileInputStream(resourceDirectory+"db.properties"));
+
+        String db_hostname = prop.getProperty("db_hostname");
+        String db_username = prop.getProperty("db_username");
+        String db_password = prop.getProperty("db_password");
+        String db_database = prop.getProperty("db_database");
+
+
+        conn = DriverManager.getConnection("jdbc:mysql://fyp.co9aylc8lacr.eu-west-1.rds.amazonaws.com/FYP_Schema", db_username, db_password);
 
         while (bucket.isTruncated()) {
             bucket = s3Client.listNextBatchOfObjects(bucket);
@@ -91,16 +110,15 @@ public class Detector {
                     Imgcodecs.imencode(".png", colouredImage, mob);
                     byte[] ba = mob.toArray();
 
-//                BufferedImage bi = ImageIO.read(new ByteArrayInputStream(ba));
-//                try {
-//                    ImageIO.write(bi.getSubimage(rect.x + 2, rect.y + 2, rect.width - 4, rect.height - 4), "png", file);
-//                } catch (IOException ex) {
-//                    Logger.getLogger(Detector.class.getName()).log(Level.SEVERE, null, ex);
-//                }
 
-//                //todo: rekognition calls
                     ByteBuffer byteBufferImg = ByteBuffer.wrap(ba);
-                    attemptRecognition(byteBufferImg, frameCounter);
+                    try {
+                        attemptRecognition(byteBufferImg, frameCounter);
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    } catch (ClassNotFoundException e) {
+                        e.printStackTrace();
+                    }
                 }).start();
             }
 
@@ -152,14 +170,11 @@ public class Detector {
         }
     }
 
-    private void attemptRecognition(ByteBuffer faceInBytes, int frameCounter) {
+    private void attemptRecognition(ByteBuffer faceInBytes, int frameCounter) throws SQLException, ClassNotFoundException {
 
         reqNum++;
         AtomicBoolean matchFound = new AtomicBoolean(false);
 
-//        summaries.forEach(System.out::println);
-
-//                    S3Objects.inBucket(s3Client, "rekog.faces").forEach((S3ObjectSummary object) -> {
         while (matchFound.get() == false) {
             for (S3ObjectSummary object : summaries) {
                 compareRequest = new CompareFacesRequest()
@@ -173,10 +188,30 @@ public class Detector {
                     matchFound.set(true);
                     System.out.println("REQ NUM: " + reqNum + " MATCHED WITH: " + object.getKey() + " ON FRAME " + frameCounter);
 
+                    try {
+                        PreparedStatement stmt = conn.prepareStatement("UPDATE users SET lastVisit=? WHERE identifier=?");
+
+                        stmt.setTimestamp(1, getCurrentTimeStamp());
+                        stmt.setString(2, object.getKey().split("[.]")[0]);
+
+                        int row = stmt.executeUpdate();
+                        System.out.println("Updated row " + row);
+
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
                 }
-//                    });
             }
         }
+    }
+
+    private static Timestamp getCurrentTimeStamp() {
+
+        Date today = new Date();
+        long time = today.getTime();
+        Timestamp ts = new Timestamp(time);
+        return ts;
+
     }
 }
 

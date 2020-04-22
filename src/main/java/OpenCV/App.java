@@ -5,12 +5,13 @@ import javax.swing.UIManager.LookAndFeelInfo;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.sql.SQLException;
 
 public class App {
     public App() {
     }
 
-    public static void main(String[] args) throws IOException, ClassNotFoundException, UnsupportedLookAndFeelException, InstantiationException, IllegalAccessException {
+    public static void main(String[] args) throws IOException, ClassNotFoundException, UnsupportedLookAndFeelException, InstantiationException, IllegalAccessException, SQLException {
 
         try {
             for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
