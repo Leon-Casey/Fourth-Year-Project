@@ -33,6 +33,7 @@ public class Detector {
     private ObjectListing bucket;
     private List<S3ObjectSummary> summaries;
     private Connection conn;
+    private long totalTime = 0;
 
 
     CompareFacesRequest compareRequest;
@@ -82,92 +83,47 @@ public class Detector {
 
         cascadeClassifier.detectMultiScale(greyImage, detectedFaces);
 
-//        File profileImgToImport = new File("test.jpg");
-//        File profileImg = new File("testProfile.jpg");
-//
-//        BufferedImage profile = ImageIO.read(profileImgToImport);
-//        ImageIO.write(profile, "jpg", profileImg);
+        long startTime = System.nanoTime();
 
-//        BufferedImage newImage = new BufferedImage(
-        //    in.getWidth(), in.getHeight(), BufferedImage.TYPE_INT_ARGB);
-
-//        BufferedImage img1 = ImageIO.read(new File("Lenna50.jpg"));
-//        BufferedImage img2 = ImageIO.read(new File("Lenna100.jpg"));
-
-        showFacesOnScreen(detectedFaces, frameCounter);
+        showFacesOnScreen(detectedFaces, frameCounter, startTime);
 
         return colouredImage;
     }
 
-    private void showFacesOnScreen(MatOfRect detectedFaces, int frameCounter) {
+    private void showFacesOnScreen(MatOfRect detectedFaces, int frameCounter, long startTime) {
         for (Rect rect : detectedFaces.toArray()) {
             Imgproc.rectangle(colouredImage, new Point(rect.x, rect.y), new Point(
                     rect.x + rect.width, rect.y + rect.height), new Scalar(250, 80, 80), 2);
             if (frameCounter % 100 == 0) {
                 new Thread(() -> {
-                    //                File file = new File("test.png");
                     MatOfByte mob = new MatOfByte();
-                    Imgcodecs.imencode(".png", colouredImage, mob);
+                    Imgcodecs.imencode(".jpg", colouredImage, mob);
                     byte[] ba = mob.toArray();
 
-
                     ByteBuffer byteBufferImg = ByteBuffer.wrap(ba);
+
                     try {
                         attemptRecognition(byteBufferImg, frameCounter);
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    } catch (ClassNotFoundException e) {
+                    } catch (SQLException | ClassNotFoundException e) {
                         e.printStackTrace();
                     }
                 }).start();
             }
-
-//            String image1 = "/home/lcasey/projects/OpenCVRekognition/test.png";
-//            String image2 = "/home/lcasey/projects/OpenCVRekognition/testProfile.jpg";
-//
-//            byte[] bytesImg1;
-//            try {
-//                bytesImg1 = Files.readAllBytes(Paths.get(image1));
-//            } catch (IOException e) {
-//                System.err.println("Failed to load source image: " + e.getMessage());
-//                return;
-//            }
-//
-//            byte[] bytesImg2;
-//            try {
-//                bytesImg2 = Files.readAllBytes(Paths.get(image2));
-//            } catch (IOException e) {
-//                System.err.println("Failed to load target image: " + e.getMessage());
-//                return;
-//            }
-//
-//            ByteBuffer byteBufferImg1 = ByteBuffer.wrap(bytesImg1);
-//            ByteBuffer byteBufferImg2 = ByteBuffer.wrap(bytesImg2);
-//
-//            CompareFacesRequest request = new CompareFacesRequest()
-//                    .withSourceImage(new Image().withBytes(byteBufferImg1))
-//                    .withTargetImage(new Image().withBytes(byteBufferImg2));
-
-//            ByteBuffer byteBufferImg = ByteBuffer.wrap(ba);
-//
-//            CompareFacesRequest request = new CompareFacesRequest()
-//                    .withSourceImage(new Image().withS3Object(new S3Object().withName("princeWill1.png").withBucket("rekog.faces")))
-//                    .withTargetImage(new Image().withBytes(byteBufferImg2))
-//                    .withSimilarityThreshold(80F);
-
-//            CompareFacesResult result = rekognitionClient.compareFaces(request);
-//
-//
-//            List<CompareFacesMatch> faceMatches = result.getFaceMatches();
-//            for (CompareFacesMatch match : faceMatches) {
-//                Float similarity = match.getSimilarity();
-//                System.out.println("Similarity: " + similarity);
-//            }
-//            final BufferedImage profileImg = ImageIO.read(new File("testProfile.png"));
-//            final BufferedImage img = ImageIO.read(new File("test.png"));
-//            double p = compareFaces(profileImg, img);
-//            System.out.println("diff percent: " + p);
         }
+
+//        if (frameCounter <= 300 && detectedFaces.rows() != 0) {
+//            long endTime = System.nanoTime();
+//
+//            long timeElapsed = endTime - startTime;
+//
+//            totalTime = totalTime + timeElapsed;
+//
+//            System.out.println("Frame " + frameCounter + ": " + detectedFaces.rows() + " face(s)");
+//            System.out.println("Process time: " + timeElapsed + "ns / " + TimeUnit.NANOSECONDS.toMillis(timeElapsed) + "ms\n");
+//        } else if(frameCounter == 301){
+//            long avgTimeToProcess = totalTime / 300;
+//            System.out.println("Average Frame Process Time With " + detectedFaces.rows() + " Faces: " + avgTimeToProcess + "ns / " + TimeUnit.NANOSECONDS.toMillis(avgTimeToProcess) + "ms");
+//        }
     }
 
     private void attemptRecognition(ByteBuffer faceInBytes, int frameCounter) throws SQLException, ClassNotFoundException {
@@ -214,14 +170,3 @@ public class Detector {
 
     }
 }
-
-
-
-//
-////                    List<CompareFacesMatch> faceMatches = result.getFaceMatches();
-////                    for (CompareFacesMatch match : faceMatches) {
-////                        Float similarity = match.getSimilarity();
-////                        System.out.println("Request " + reqNum + ": MATCHED WITH " + match.toString() + " Similarity: " + similarity);
-////                    }
-//            }
-//            });

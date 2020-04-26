@@ -28,32 +28,11 @@ public class MainFrame extends JFrame {
         setDefaultLookAndFeelDecorated(true);
         setSize(600, 500);
         setVisible(true);
-//        addWindowListener(new WindowAdapter() {
-//            public void windowClosing(WindowEvent e) {
-//                System.exit(0);
-//            }
-//        });
-
-
-//        Statement statement = conn.createStatement();
-//        String sql = "SELECT * FROM users";
-//        ResultSet rs = statement.executeQuery(sql);
-//        ResultSetMetaData rsmd = rs.getMetaData();
-//        int columnsNumber = rsmd.getColumnCount();
-//        while (rs.next()) {
-//            for (int i = 1; i <= columnsNumber; i++) {
-//                if (i > 1) System.out.print(",  ");
-//                String columnValue = rs.getString(i);
-//                System.out.print(columnValue + " " + rsmd.getColumnName(i));
-//            }
-//            System.out.println("");
-//        }
     }
 
-    public void displayCam() throws IOException {
+    public void displayCam(int camIndex) throws IOException {
         Mat webcamImage = new Mat();
-        //todo: index 0 or 1
-        VideoCapture videoCapture = new VideoCapture(0);
+        VideoCapture videoCapture = new VideoCapture(camIndex);
         videoCapture.set(Videoio.CAP_PROP_FPS, 30);
 
         if (videoCapture.isOpened()) {
@@ -70,6 +49,9 @@ public class MainFrame extends JFrame {
                     break;
                 }
             }
+        }
+        else {
+            displayCam(camIndex + 1);
         }
     }
 }

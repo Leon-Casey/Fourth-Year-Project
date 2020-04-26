@@ -29,12 +29,10 @@ public class App {
         //Check if credentials file exists
         if(path.toFile().exists()) {
             MainFrame mainFrame = new MainFrame();
-            mainFrame.displayCam();
+            mainFrame.displayCam(1);
         }
         else {
             JFrame credsFrame = new Credentials();
         }
-//        MainFrame mainFrame = new MainFrame();
-//        mainFrame.displayCam();
     }
 }
